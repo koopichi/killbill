@@ -467,19 +467,19 @@ public class InvoiceDispatcher {
             return result;
         } catch (final CatalogApiException e) {
             log.warn("Failed to generate invoice for accountId='{}', dryRunArguments='{}'", accountId, dryRunArguments, e);
-            if (!isDryRun && invoiceConfig.isParkAccountsOnAllExceptions(context)) {
+            if (!isDryRun && !isApiCall && invoiceConfig.isParkAccountsOnAllExceptions(context)) {
                 parkAccount(accountId, context);
             }
             return Collections.emptyList();
         } catch (final AccountApiException e) {
             log.warn("Failed to generate invoice for accountId='{}', dryRunArguments='{}'", accountId, dryRunArguments, e);
-            if (!isDryRun && invoiceConfig.isParkAccountsOnAllExceptions(context)) {
+            if (!isDryRun && !isApiCall && invoiceConfig.isParkAccountsOnAllExceptions(context)) {
                 parkAccount(accountId, context);
             }
             return Collections.emptyList();
         } catch (final SubscriptionBaseApiException e) {
             log.warn("Failed to generate invoice for accountId='{}', dryRunArguments='{}'", accountId, dryRunArguments, e);
-            if (!isDryRun && invoiceConfig.isParkAccountsOnAllExceptions(context)) {
+            if (!isDryRun && !isApiCall && invoiceConfig.isParkAccountsOnAllExceptions(context)) {
                 parkAccount(accountId, context);
             }
             return Collections.emptyList();
@@ -488,7 +488,7 @@ public class InvoiceDispatcher {
                 log.info("Invoice generation aborted by plugin for accountId='{}', targetDate='{}'", accountId, inputTargetDate);
                 return Collections.emptyList();
             }
-
+            // Only case where we park even if this is from an API call
             if (e.getCode() == ErrorCode.UNEXPECTED_ERROR.getCode() && !isDryRun) {
                 parkAccount(accountId, context);
             }
