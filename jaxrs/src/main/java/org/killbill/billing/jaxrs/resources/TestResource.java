@@ -276,7 +276,7 @@ public class TestResource extends JaxRsResourceBase {
                 parkedAccountsManagerLog.warn("Unparking account for accountId='{}'", accountId);
                 break;
             default:
-                throw new IllegalArgumentException("Unknown invoice log entry type");
+                throw new IllegalArgumentException("Unknown invoice log entry type. Supported values are: FAILED_GENERATE_BCD, FAILED_GENERATE_LOCK, FAILED_GENERATE_TARGET_DATE_LOCK, FAILED_GENERATE_DRY_RUN, FAILED_GENERATE_FUTURE_NOTIFICATION, FAILED_GENERATE_PARENT_LOCK, ABORTED_BY_PLUGIN, RESCHEDULED_BY_PLUGIN, UNABLE_TO_PARK, PARK_ACCOUNT, UNPARK_ACCOUNT");
         }
         return Response.status(Status.NO_CONTENT).build();
     }
